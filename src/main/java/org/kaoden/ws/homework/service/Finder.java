@@ -1,29 +1,25 @@
 package org.kaoden.ws.homework.service;
 
 import org.kaoden.ws.homework.obj.Entry;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.UUID;
 
+@Component
 public class Finder {
 
-    private static final String INVALID_UUID_MESSAGE = "Неверный UUID";
     private static final String NO_ENTRIES = "Нет записей с таким именем";
 
     private final Map<UUID, Entry> entries;
 
+    @Autowired
     public Finder(Map<UUID, Entry> entries) {
         this.entries = entries;
     }
 
-    public void findByUUID(String stringUUID) {
-        UUID uuid;
-        try {
-            uuid = UUID.fromString(stringUUID);
-        } catch (IllegalArgumentException ex) {
-            System.out.println(INVALID_UUID_MESSAGE);
-            return;
-        }
+    public void findByUUID(UUID uuid) {
         if (entries.containsKey(uuid))
             System.out.println(entries.get(uuid));
         else

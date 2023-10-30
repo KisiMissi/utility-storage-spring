@@ -3,6 +3,8 @@ package org.kaoden.ws.homework.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.kaoden.ws.homework.obj.Entry;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,11 +13,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Component
 public class Reader {
 
+    @Value("${data.path}")
+    private String filePath;
     private final ObjectMapper mapper = new ObjectMapper();
 
-    public Map<UUID, Entry> readEntriesFromJson(String filePath) {
+    public Map<UUID, Entry> readEntriesFromJson() {
+        System.out.println(filePath);
         List<Entry> entryList = readEntriesAsList(getFile(filePath));
         return convertListToMap(entryList);
     }
