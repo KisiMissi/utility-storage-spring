@@ -1,14 +1,11 @@
 package org.kaoden.ws.homework;
 
-import org.kaoden.ws.homework.config.MenuConfig;
-import org.kaoden.ws.homework.service.Menu;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+@SpringBootApplication
 public class Main {
     public static void main( String[] args ) {
-        AnnotationConfigApplicationContext appConfig =
-                new AnnotationConfigApplicationContext(MenuConfig.class);
-
-        appConfig.getBean("menu", Menu.class).selectSearchMode();
+        SpringApplication.run(Main.class, args);
     }
 }

@@ -1,7 +1,6 @@
 package org.kaoden.ws.homework.service;
 
 import org.kaoden.ws.homework.obj.Entry;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -14,7 +13,6 @@ public class Finder {
 
     private final Map<UUID, Entry> entries;
 
-    @Autowired
     public Finder(Map<UUID, Entry> entries) {
         this.entries = entries;
     }

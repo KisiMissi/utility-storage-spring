@@ -1,6 +1,5 @@
 package org.kaoden.ws.homework.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
@@ -28,7 +27,6 @@ public class Menu {
     private final Scanner scanner = new Scanner(System.in);
     private final Finder entryFinder;
 
-    @Autowired
     public Menu(Finder entryFinder) {
         this.entryFinder = entryFinder;
     }
