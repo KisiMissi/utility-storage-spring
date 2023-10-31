@@ -2,6 +2,7 @@ package org.kaoden.ws.homework.service;
 
 import org.junit.jupiter.api.Test;
 import org.kaoden.ws.homework.obj.Entry;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,10 +18,11 @@ class ReaderTest {
     void invalidFilePath() {
         // Arrange
         String filePath = "test.json";
+        ReflectionTestUtils.setField(reader, "filePath", filePath);
         String expectedMessage = "File with this location \""+filePath+"\" doesn't exist";
 
         // Act
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> reader.readEntriesFromJson(filePath));
+        RuntimeException exception = assertThrows(RuntimeException.class, reader::readEntriesFromJson);
 
         // Asset
         assertEquals(expectedMessage, exception.getMessage());
@@ -29,11 +31,11 @@ class ReaderTest {
     @Test
     void emptyDataFile() {
         // Arrange
-        String filePath = "src\\test\\resources\\emptyData.json";
+        ReflectionTestUtils.setField(reader, "filePath", "src\\test\\resources\\emptyData.json");
         Map<UUID, Entry> expectedEntries = new HashMap<>();
 
         // Act
-        Map<UUID, Entry> actualEntries = reader.readEntriesFromJson(filePath);
+        Map<UUID, Entry> actualEntries = reader.readEntriesFromJson();
 
         // Assert
         assertEquals(expectedEntries, actualEntries);
@@ -43,10 +45,11 @@ class ReaderTest {
     void invalidKeyNameInDataFile() {
         // Arrange
         String filePath = "src\\test\\resources\\dataWithInvalidKeyName.json";
+        ReflectionTestUtils.setField(reader, "filePath", filePath);
         String expectedMessage = "An error occurred while reading file: " + filePath;
 
         // Act
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> reader.readEntriesFromJson(filePath));
+        RuntimeException exception = assertThrows(RuntimeException.class, reader::readEntriesFromJson);
 
         // Assert
         assertEquals(expectedMessage, exception.getMessage());
@@ -54,10 +57,10 @@ class ReaderTest {
 
     @Test
     void someFieldsMissingInDataFile() {
-        String filePath = "src\\test\\resources\\dataWithMissingFields.json";
+        ReflectionTestUtils.setField(reader, "filePath", "src\\test\\resources\\dataWithMissingFields.json");
 
         // Act
-        Map<UUID, Entry> actualEntries = reader.readEntriesFromJson(filePath);
+        Map<UUID, Entry> actualEntries = reader.readEntriesFromJson();
 
         // Arrange
         assertTrue(actualEntries.isEmpty());
