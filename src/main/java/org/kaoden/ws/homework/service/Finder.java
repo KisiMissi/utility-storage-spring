@@ -1,12 +1,10 @@
 package org.kaoden.ws.homework.service;
 
 import org.kaoden.ws.homework.obj.Entry;
-import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.UUID;
 
-@Component
 public class Finder {
 
     private static final String NO_ENTRIES = "Нет записей с таким именем";

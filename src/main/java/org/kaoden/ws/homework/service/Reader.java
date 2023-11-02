@@ -18,7 +18,7 @@ public class Reader {
 
     @Value("${data.path}")
     private String filePath;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public Map<UUID, Entry> readEntriesFromJson() {
         System.out.println(filePath);
@@ -36,7 +36,7 @@ public class Reader {
 
     private List<Entry> readEntriesAsList(File file) {
         try {
-            return mapper.readValue(file, new TypeReference<>() {});
+            return MAPPER.readValue(file, new TypeReference<>() {});
         } catch (IOException ioe) {
             throw new RuntimeException("An error occurred while reading file: " + file.toString());
         }
