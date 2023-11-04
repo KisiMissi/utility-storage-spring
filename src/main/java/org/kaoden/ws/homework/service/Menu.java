@@ -1,9 +1,11 @@
-package org.kaoden.ws.homework;
+package org.kaoden.ws.homework.service;
 
-import org.kaoden.ws.homework.service.Finder;
+import org.springframework.stereotype.Component;
 
 import java.util.Scanner;
+import java.util.UUID;
 
+@Component
 public class Menu {
 
     private static final String MODE_OPTIONS = """
@@ -13,6 +15,7 @@ public class Menu {
             Вариант (1/2), Выход (3):
             """;
     private static final String INVALID_MODE_MESSAGE = "Неверный режим поиска.";
+    private static final String INVALID_UUID_MESSAGE = "Неверный UUID";
 
     private static final String UUID_ENTRY_MESSAGE = "Введите UUID записи: ";
     private static final String NAME_ENTRY_MESSAGE = "Введите название записи: ";
@@ -48,7 +51,14 @@ public class Menu {
 
     private void findEntryByUUID() {
         System.out.print(UUID_ENTRY_MESSAGE);
-        entryFinder.findByUUID(scanner.nextLine());
+        UUID uuid;
+        try {
+            uuid = UUID.fromString(scanner.nextLine());
+        } catch (IllegalArgumentException ex) {
+            System.out.println(INVALID_UUID_MESSAGE);
+            return;
+        }
+        entryFinder.findByUUID(uuid);
     }
 
     private void findEntryByName() {
